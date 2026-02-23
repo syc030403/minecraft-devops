@@ -8,7 +8,7 @@ client = docker.from_env()
 def get_status():
     try:
         container = client.containers.get("minecraft-server")
-        return {"status": container.status}
+        return {"status": container.status, "message": "서버 정상 동작 중"}
     except Exception as e:
         return {"status": "not found", "error": str(e)}
 
