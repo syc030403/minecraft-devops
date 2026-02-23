@@ -1,31 +1,26 @@
-from fastapi import FastAPI
-import docker
+from fastapi.testclient import TestClient
+from unittest.mock import MagicMock, patch
+from main import app
 
-app = FastAPI()
-client = docker.from_env()
+client = TestClient(app)
 
-@app.get("/status")
-def get_status():
-    try:
-        container = client.containers.get("minecraft-server")
-        return {"status": container.status, "message": "서버 정상 동작 중"}
-    except Exception as e:
-        return {"status": "not found", "error": str(e)}
+def test_status():
+    with patch("main.client") as mock_client:
+        mock_client.containers.get.return_value.status = "running"
+        response = client.get("/status")
+        assert response.status_code == 200
+        assert response.json()["status"] == "running"
 
-@app.post("/start")
-def start_server():
-    try:
-        container = client.containers.get("minecraft-server")
-        container.start()
-        return {"message": "서버 시작됨"}
-    except Exception as e:
-        return {"error": str(e)}
+def test_start():
+    with patch("main.client") as mock_client:
+        mock_client.containers.get.return_value = MagicMock()
+        response = client.post("/start")
+        assert response.status_code == 200
+        assert "message" in response.json()
 
-@app.post("/stop")
-def stop_server():
-    try:
-        container = client.containers.get("minecraft-server")
-        container.stop()
-        return {"message": "서버 중지됨"}
-    except Exception as e:
-        return {"error": str(e)}
+def test_stop():
+    with patch("main.client") as mock_client:
+        mock_client.containers.get.return_value = MagicMock()
+        response = client.post("/stop")
+        assert response.status_code == 200
+        assert "message" in response.json()
