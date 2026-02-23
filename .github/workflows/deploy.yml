@@ -18,9 +18,8 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
+            script: |
             cd ~/fastapi
             git pull origin main
             cd ~/monitoring
-            docker-compose stop fastapi
-            docker-compose rm -f fastapi
             docker-compose up -d --build fastapi
