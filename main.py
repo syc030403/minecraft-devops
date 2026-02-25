@@ -36,6 +36,7 @@ def get_players():
     try:
         container = client.containers.get("minecraft-server")
         result = container.exec_run("rcon-cli list")
-        return {"players": result.output.decode().strip()}
+        output = result.output.decode().strip()
+        return {"server": output.split(":")[0].strip()}
     except Exception as e:
         return {"error": str(e)}
