@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 import docker
+import subprocess
 
 app = FastAPI()
 client = docker.from_env()
@@ -27,5 +28,17 @@ def stop_server():
         container = client.containers.get("minecraft-server")
         container.stop()
         return {"message": "서버 중지됨"}
+    except Exception as e:
+        return {"error": str(e)}
+    
+@app.get("/players")
+def get_players():
+    try:
+        result = subprocess.run(
+            ["docker", "exec", "minecraft-server", "rcon-cli", "list"],
+            capture_output=True,
+            text=True
+        )
+        return {"players": result.stdout.strip()}
     except Exception as e:
         return {"error": str(e)}
