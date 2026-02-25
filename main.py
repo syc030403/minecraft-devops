@@ -1,3 +1,4 @@
+from fastapi.responses import PlainTextResponse
 from fastapi import FastAPI
 import docker
 import subprocess
@@ -30,8 +31,18 @@ def stop_server():
         return {"message": "서버 중지됨"}
     except Exception as e:
         return {"error": str(e)}
-    
+
 @app.get("/players")
+def get_players():
+    try:
+        container = client.containers.get("minecraft-server")
+        result = container.exec_run("rcon-cli list")
+        return {"players": result.output.decode().strip()}
+    except Exception as e:
+        return {"error": str(e)}
+
+'''
+@app.get("/players") 반환 문자열 구조 수정버전
 def get_players():
     try:
         container = client.containers.get("minecraft-server")
@@ -40,3 +51,4 @@ def get_players():
         return {"server": output.split(":")[0].strip()}
     except Exception as e:
         return {"error": str(e)}
+'''
