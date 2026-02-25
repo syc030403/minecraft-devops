@@ -34,11 +34,8 @@ def stop_server():
 @app.get("/players")
 def get_players():
     try:
-        result = subprocess.run(
-            ["docker", "exec", "minecraft-server", "rcon-cli", "list"],
-            capture_output=True,
-            text=True
-        )
-        return {"players": result.stdout.strip()}
+        container = client.containers.get("minecraft-server")
+        result = container.exec_run("rcon-cli list")
+        return {"players": result.output.decode().strip()}
     except Exception as e:
         return {"error": str(e)}
