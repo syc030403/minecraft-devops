@@ -79,6 +79,7 @@ pytest                     # 관리 API가 생긴 뒤
 - 관련 `docs/design/systems/*.md`
 - `docs/design/verification.md` (새로 지켜야 할 규칙이 생긴 경우)
 - `docs/player-guide.md` (친구에게 영향이 있는 경우)
+- Notion 운영 기록 (설정 변경, 문제 해결, 새로 알게 된 것이 있는 경우. 형식은 `CLAUDE.md` "기록")
 
 ## Phase 8: 보고
 ```
