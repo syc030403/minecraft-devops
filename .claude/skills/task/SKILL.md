@@ -80,6 +80,10 @@ pytest                     # 관리 API가 생긴 뒤
 - `docs/design/verification.md` (새로 지켜야 할 규칙이 생긴 경우)
 - `docs/player-guide.md` (친구에게 영향이 있는 경우)
 - Notion 운영 기록 (설정 변경, 문제 해결, 새로 알게 된 것이 있는 경우. 형식은 `CLAUDE.md` "기록")
+- Notion 학습 기록 (형식은 `CLAUDE.md` "기록")
+  - 작업 회고 `#N <이슈 제목>`: feature·bug는 필수, docs·chore는 새로 배운 게 있을 때만. PR 번호는 `/pr` 뒤에 채운다
+  - 개념 정리: 이번 작업에서 새로 다룬 개념. 이미 있는 주제면 덧붙인다
+  - 작업 회고 ↔ 개념 정리 ↔ 원본 로그 ↔ 트러블슈팅을 서로 링크한다
 
 ## Phase 8: 보고
 ```
