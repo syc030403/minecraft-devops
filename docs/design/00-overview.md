@@ -25,6 +25,8 @@
 
 | 경로 | 내용 | git |
 | --- | --- | --- |
+| `README.md` | 저장소 소개 (요약 + 문서 링크) | O |
+| `LICENSE` | MIT | O |
 | `compose.yaml` | 서버 정의 | O |
 | `scripts/` | 백업, DDNS 등 스크립트 | O |
 | `.env.example` | `.env` 키 목록 | O |
