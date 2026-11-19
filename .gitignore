@@ -1,0 +1,36 @@
+# 월드 데이터 (컨테이너 생성)
+data/
+
+# 비밀값
+.env
+.env.*
+!.env.example
+
+# 백업 산출물
+backups/
+*.tar.gz
+*.zip
+
+# Python (관리 API)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 스킬 시스템 원본 가이드 (로컬 참고용)
+claude-skill-workflow-guide.md
+
+# Claude Code 로컬 설정 (호스트 정보 포함)
+CLAUDE.local.md
+.claude/settings.local.json
+
+# 서버 운영 데이터
+whitelist.json
+ops.json
+*.log
+
+# 에디터/OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
