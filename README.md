@@ -30,13 +30,15 @@ flowchart LR
 
 | 분류 | 사용 | 상태 |
 | --- | --- | --- |
+| OS | Ubuntu Desktop (노트북 1대) | 사용 중 |
 | 컨테이너 | Docker, Docker Compose | 사용 중 |
 | 서버 | [itzg/minecraft-server](https://github.com/itzg/docker-minecraft-server), Paper 26.3 | 사용 중 |
 | 원격 접속 | Tailscale, SSH(키 인증) | 사용 중 |
 | 방화벽 | ufw | 사용 중 |
+| 작업 관리 | GitHub Issues·PR, gh CLI, Claude Code | 사용 중 |
+| 자동화 스크립트 | Bash, shellcheck | 예정 |
 | DDNS | DuckDNS | 예정 |
 | 관리 API | FastAPI | 예정 |
-| 모니터링 | 상태·알림, 모니터링 GUI | 예정 |
 
 ## 보안 설계
 
