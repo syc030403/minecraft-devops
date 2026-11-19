@@ -1,0 +1,25 @@
+# Paper 마인크래프트 서버
+# 사양: docs/design/systems/01-server.md, 포트 규칙: docs/design/systems/02-network.md
+# 값은 .env에서 읽는다 (.env.example 참고).
+
+services:
+  mc:
+    image: itzg/minecraft-server:latest
+    container_name: mc
+    restart: unless-stopped
+    # 종료 시 월드 저장 시간 확보
+    stop_grace_period: 1m
+    environment:
+      EULA: "TRUE"
+      TYPE: PAPER
+      VERSION: ${MC_VERSION:?.env에 MC_VERSION을 설정하세요}
+      MEMORY: 6G
+      TZ: Asia/Seoul
+      ONLINE_MODE: "TRUE"
+      ENABLE_WHITELIST: "TRUE"
+      ENFORCE_WHITELIST: "TRUE"
+    ports:
+      # 외부 공개는 이 포트 하나만. RCON(25575)은 넣지 않는다.
+      - "${MC_PORT:?.env에 MC_PORT를 설정하세요}:25565"
+    volumes:
+      - ./data:/data
