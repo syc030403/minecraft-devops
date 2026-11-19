@@ -19,13 +19,21 @@
 ## DDNS
 - [확정] DuckDNS로 유동 공인 IP를 도메인에 연결한다.
 - [확정] DuckDNS 토큰은 `.env`에 둔다. 로그·커밋에 남기지 않는다.
-- [미정] 갱신 방식: 스크립트 + cron/systemd 타이머 vs 컨테이너
-- [미정] 갱신 주기
-- [미정] 도메인을 공개 문서에 적을지 (공개하면 서버 주소가 노출됨)
+- [확정] 갱신: `scripts/duckdns-update.sh` + systemd 시스템 타이머 `duckdns-update.timer` (부팅 1분 뒤, 이후 5분마다)
+- [확정] `ip=`를 비워 요청을 보낸 공인 IP로 갱신. IPv4만 (유선에 공인 IPv6 없음)
+- [확정] 도메인은 공개 문서에 쓰지 않는다. 실제 값은 `.env`(`DUCKDNS_DOMAIN`)와 `CLAUDE.local.md`. 친구에게는 메시지로 전달
+- [확정] 토큰은 curl 설정을 표준 입력으로 넘겨 출력·로그·프로세스 인자에 남기지 않는다
+- [확정] unit 파일은 `deploy/systemd/*.in` 템플릿에서 `scripts/render-systemd.sh`로 생성(`build/`, gitignore). 설치는 디렉터가 sudo로
+- 운영 명령
+  - 상태: `systemctl list-timers duckdns-update.timer`
+  - 로그: `journalctl -u duckdns-update.service`
+  - 수동 갱신: `scripts/duckdns-update.sh` (설정만 확인: `--dry-run`)
+  - 토큰 재발급 후: `.env`의 `DUCKDNS_TOKEN` 교체
 
 ## 관련 파일
 - `compose.yaml`의 `ports`
-- `scripts/` DDNS 스크립트 (작성 전)
+- `scripts/duckdns-update.sh`, `scripts/render-systemd.sh`
+- `deploy/systemd/duckdns-update.service.in`, `duckdns-update.timer.in`
 
 ## 확인 방법
 - `docker compose config`의 `ports` 확인
