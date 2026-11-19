@@ -1,0 +1,14 @@
+# 템플릿: scripts/render-systemd.sh 가 @USER@, @REPO_DIR@ 를 채워 build/systemd/ 에 만든다.
+[Unit]
+Description=DuckDNS 도메인 갱신
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=@USER@
+ExecStart=@REPO_DIR@/scripts/duckdns-update.sh
+# 최소 권한
+NoNewPrivileges=yes
+ProtectSystem=full
+ProtectHome=read-only
