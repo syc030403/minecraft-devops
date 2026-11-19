@@ -24,15 +24,15 @@
 - `.env.example`: `MC_PORT=`, `MC_VERSION=LATEST`
 
 ## 수용 기준
-- [ ] 성공: `docker compose config -q` 통과
-- [ ] 성공: `docker compose up -d` 후 `docker logs mc`에 `Done (` 출력
-- [ ] 성공: `ss -tlnp`에서 새로 열린 포트가 `0.0.0.0:<MC_PORT>` 하나이고 25575는 호스트에 없음
+- [x] 성공: `docker compose config -q` 통과
+- [x] 성공: `docker compose up -d` 후 `docker logs mc`에 `Done (` 출력
+- [x] 성공: `ss -tlnp`에서 새로 열린 포트가 `0.0.0.0:<MC_PORT>` 하나이고 25575는 호스트에 없음
 - [ ] 성공: 화이트리스트에 등록한 계정으로 외부망(휴대폰 데이터 테더링 등)에서 접속
 - [ ] 성공: 친구 1명 이상 접속
 - [ ] 실패·예외: 화이트리스트에 없는 계정은 접속 거부
-- [ ] 실패·예외: `.env`에 `MC_PORT`가 없으면 `docker compose config`가 오류
-- [ ] 경계: `docker compose down` → `up -d` 후 월드·화이트리스트 유지
-- [ ] 경계: `MC_VERSION`을 확인된 버전으로 고정하고 다시 띄워도 같은 버전
+- [x] 실패·예외: `.env`에 `MC_PORT`가 없으면 `docker compose config`가 오류
+- [ ] 경계: `docker compose down` → `up -d` 후 월드·화이트리스트 유지 (월드는 확인: 시드 동일. 화이트리스트는 등록 후 확인)
+- [x] 경계: `MC_VERSION`을 확인된 버전으로 고정하고 다시 띄워도 같은 버전
 
 ## 지켜야 할 규칙
 - verification.md: V1, V2, V3, V4, V5, V6, V13, V14
@@ -61,7 +61,9 @@
 | MEMORY 6G (8G에서 변경) | 실제 메모리 13Gi, 가용 9.4Gi. 8G 힙이면 컨테이너가 약 10G를 씀 | 2026-11-19 |
 | 외부 포트는 `.env`의 `MC_PORT` | 공개 저장소에 실제 포트를 두지 않음 | 2026-11-19 |
 | 마크 버전은 첫 기동 버전으로 `MC_VERSION`에 고정 | 자동 업그레이드되면 월드를 되돌릴 수 없음 | 2026-11-19 |
+| 고정 버전 26.3 (Paper 26.3-255) | 2026-11-19 첫 기동 로그에서 확인 | — |
 
 ## 진행 기록
 - 2026-11-19 빈 기획 파일 생성 (/issue)
 - 2026-11-19 기획 작성 (/plan)
+- 2026-11-19 구현 (/task): compose.yaml, .env.example 작성, 기동·포트·버전 고정·재생성 확인. 화이트리스트·외부 접속은 디렉터 확인 대기
