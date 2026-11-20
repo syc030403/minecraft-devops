@@ -42,10 +42,10 @@
 
 ## 수용 기준
 - [x] 성공: 루트에 `README.md`가 있고, 위 11개 절이 있다
-- [ ] 성공: GitHub에서 mermaid 구성도가 그림으로 보인다 (푸시 후 디렉터 확인)
+- [x] 성공: GitHub에서 mermaid 구성도가 그림으로 보인다 (푸시 후 디렉터 확인. 2026-11-19 확인)
 - [x] 성공: README의 상대 링크가 모두 실제 파일을 가리킨다
 - [x] 성공: 실행 방법의 키 이름(`MC_PORT`, `MC_VERSION`)과 명령이 `compose.yaml`·`.env.example`과 일치한다
-- [ ] 성공: 루트에 MIT `LICENSE`가 있고, GitHub가 "MIT license"로 인식한다 (파일은 작성. 인식은 merge 후 기본 브랜치에서 확인)
+- [x] 성공: 루트에 MIT `LICENSE`가 있고, GitHub가 "MIT license"로 인식한다 (파일은 작성. 인식은 merge 후 기본 브랜치에서 확인. 2026-11-20 `gh repo view` → `MIT License`)
 - [x] 성공: 저장소 설명과 토픽 7개가 설정돼 있다 (`gh repo view`)
 - [x] 경계: 150줄 안팎 (`wc -l`, 180줄 이하)
 - [x] 경계: 로드맵 상태가 실제와 맞다 (#1은 "배포 완료, 외부 접속 확인 중")
@@ -83,3 +83,4 @@
 - 2026-11-19 빈 기획 파일 생성 (/issue)
 - 2026-11-19 기획 작성 (/plan)
 - 2026-11-19 구현 (/task): README.md(129줄), LICENSE(MIT) 작성, 00-overview 디렉토리 표 갱신, 저장소 설명·토픽 설정
+- 2026-11-20 직접 확인 완료 (#12): mermaid 그림 표시, MIT 인식. README 로드맵 #1은 "완료"로 갱신
