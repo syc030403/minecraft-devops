@@ -34,7 +34,7 @@
 | `.env.example` | `.env` 키 목록 | O |
 | `.env` | 비밀값·호스트별 값 | X |
 | `data/` | 컨테이너가 만드는 월드 데이터 | X |
-| `backups/` | 백업 결과물 [임시] 위치 | X |
+| `backups/` | 백업 결과물 (`scripts/world-backup.sh`, 최근 7개) | X |
 | `docs/` | 기준 문서, 기획 파일, 협업 문서, 플레이어 안내 | O |
 | `.claude/skills/` | 협업 스킬 | O |
 | `CLAUDE.local.md` | 로컬 전용 정보 | X |
@@ -64,6 +64,7 @@
 | 10 | GUI 끄기 (Desktop 유지, `multi-user.target` 부팅으로 메모리 확보) | server | [아이디어] |
 | 11 | Ubuntu Server 이전 (백업·호스트 설정 자동화 이후) | server | [아이디어] |
 | 12 | 호스트 설정 자동화 (Docker·Tailscale·SSH·ufw·절전 설정을 스크립트 또는 Ansible로) | server, network | [아이디어] |
+| 13 | 외부(오프사이트) 백업 (비용·계정 검토 후) | backup | [아이디어] |
 | 8 | GitHub Actions (compose config, shellcheck) | — | [아이디어] |
 
 로드맵 항목은 `/issue`로 이슈를 만들어 진행한다.

@@ -5,7 +5,7 @@
 ## 사양
 - [확정] 이미지: `itzg/minecraft-server`, 컨테이너 이름 `mc`
 - [확정] `TYPE=PAPER`, `MEMORY=6G`, `TZ=Asia/Seoul`
-- [확정] 버전: `.env`의 `MC_VERSION`에 고정. 현재 26.3 (Paper 26.3-255). 업그레이드는 백업 후 별도 이슈
+- [확정] 버전: `.env`의 `MC_VERSION`에 고정. 현재 26.3 (Paper 26.3-256, 2026-11-20 기동 로그로 확인. 첫 기동은 255였고 컨테이너를 다시 만들 때 같은 26.3 안에서 빌드가 올라감). 업그레이드는 백업 후 별도 이슈
 - [확정] `ONLINE_MODE=TRUE` (정품 계정만)
 - [확정] `ENABLE_WHITELIST` + `ENFORCE_WHITELIST=TRUE`
 - [확정] `EULA=TRUE` (Minecraft EULA 동의)

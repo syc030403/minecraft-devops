@@ -12,6 +12,7 @@ build/
 # 백업 산출물
 backups/
 *.tar.gz
+*.tar.zst
 *.zip
 
 # Python (관리 API)
