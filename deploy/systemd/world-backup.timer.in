@@ -1,0 +1,11 @@
+# 템플릿: scripts/render-systemd.sh 가 build/systemd/ 에 만든다.
+[Unit]
+Description=마크 월드 백업 (매일 04:00, 꺼져 있었으면 켜진 뒤)
+
+[Timer]
+OnCalendar=*-*-* 04:00:00
+Persistent=true
+Unit=world-backup.service
+
+[Install]
+WantedBy=timers.target

@@ -19,6 +19,8 @@ flowchart LR
     ip -->|"Docker 포트 공개"| mc["mc 컨테이너<br/>Paper 26.3"]
     mc <-->|"바인드 마운트"| data[("./data<br/>월드·설정")]
     timer["systemd 타이머<br/>5분마다"] -->|"IP 갱신"| ddns
+    btimer["systemd 타이머<br/>매일 04:00"] -->|"save-off → 압축 → save-on"| data
+    data -->|"tar + zstd, 최근 7개"| backups[("./backups")]
     tailscale["Tailscale"] --> ssh["SSH"]
     ssh -->|"docker exec"| rcon["rcon-cli<br/>(컨테이너 내부 전용)"]
     rcon --> mc
@@ -39,6 +41,7 @@ flowchart LR
 | 작업 관리 | GitHub Issues·PR, gh CLI, Claude Code | 사용 중 |
 | 자동화 스크립트 | Bash, shellcheck, systemd 타이머 | 사용 중 |
 | DDNS | DuckDNS, systemd 타이머 | 사용 중 |
+| 백업 | tar + zstd, systemd 타이머 (매일, 최근 7개) | 사용 중 |
 | 관리 API | FastAPI | 예정 |
 
 ## 보안 설계
@@ -97,7 +100,7 @@ Claude Code 스킬로 이슈부터 PR까지 같은 순서로 진행하고, 매 �
 | 1 | Docker 설치 확인 | 완료 |
 | 2 | `compose.yaml` 작성·배포, 친구 접속 테스트 | 완료 ([#1](../../issues/1)) |
 | 3 | DuckDNS DDNS (유동 IP 대응) | 완료 ([#10](../../issues/10)) |
-| 4 | 월드 백업 자동화 | 예정 |
+| 4 | 월드 백업 자동화 | 완료 ([#17](../../issues/17)) |
 | 5 | FastAPI 관리 API | 예정 |
 | 6 | 모니터링, 모니터링 GUI | 예정 |
 | 7 | GitHub Actions (compose config, shellcheck) | 예정 |
@@ -120,7 +123,7 @@ Claude Code 스킬로 이슈부터 PR까지 같은 순서로 진행하고, 매 �
 .
 ├── compose.yaml        서버 정의
 ├── .env.example        .env 키 목록 (.env는 커밋하지 않음)
-├── scripts/            운영 스크립트 (DuckDNS 갱신, systemd unit 생성)
+├── scripts/            운영 스크립트 (DuckDNS 갱신, 월드 백업, systemd unit 생성)
 ├── deploy/systemd/     systemd unit 템플릿
 ├── docs/               기준 문서, 기획 파일, 협업 문서, 접속 안내
 ├── .claude/skills/     작업 흐름 스킬 (briefing, issue, plan, task, pr, review)
