@@ -6,6 +6,9 @@ data/
 .env.*
 !.env.example
 
+# 생성 산출물 (scripts/render-systemd.sh)
+build/
+
 # 백업 산출물
 backups/
 *.tar.gz

@@ -25,8 +25,12 @@
 
 | 경로 | 내용 | git |
 | --- | --- | --- |
+| `README.md` | 저장소 소개 (요약 + 문서 링크) | O |
+| `LICENSE` | MIT | O |
 | `compose.yaml` | 서버 정의 | O |
 | `scripts/` | 백업, DDNS 등 스크립트 | O |
+| `deploy/systemd/` | systemd unit 템플릿 (`.in`) | O |
+| `build/` | 템플릿에서 생성한 unit 파일 | X |
 | `.env.example` | `.env` 키 목록 | O |
 | `.env` | 비밀값·호스트별 값 | X |
 | `data/` | 컨테이너가 만드는 월드 데이터 | X |
@@ -56,6 +60,10 @@
 | 5 | FastAPI 관리 API | api | [아이디어] |
 | 6 | 모니터링 | monitoring | [아이디어] |
 | 7 | 모니터링 GUI (에반게리온 풍) | monitoring, api | [아이디어] |
+| 9 | 공유기 도입 검토 (NAT로 노출 범위 제한, 내장 DDNS) | network | [아이디어] |
+| 10 | GUI 끄기 (Desktop 유지, `multi-user.target` 부팅으로 메모리 확보) | server | [아이디어] |
+| 11 | Ubuntu Server 이전 (백업·호스트 설정 자동화 이후) | server | [아이디어] |
+| 12 | 호스트 설정 자동화 (Docker·Tailscale·SSH·ufw·절전 설정을 스크립트 또는 Ansible로) | server, network | [아이디어] |
 | 8 | GitHub Actions (compose config, shellcheck) | — | [아이디어] |
 
 로드맵 항목은 `/issue`로 이슈를 만들어 진행한다.

@@ -1,0 +1,11 @@
+# 템플릿: scripts/render-systemd.sh 가 build/systemd/ 에 만든다.
+[Unit]
+Description=DuckDNS 도메인 갱신 (부팅 1분 뒤, 이후 5분마다)
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=5min
+Unit=duckdns-update.service
+
+[Install]
+WantedBy=timers.target

@@ -8,7 +8,7 @@
 | V1 | 외부(인터넷) 공개 포트는 마크 서버 포트 하나뿐 | `docker compose config`의 `ports`에서 `host_ip`가 없거나 `0.0.0.0`인 것이 마크 서버 포트 하나인지. 나머지는 `127.0.0.1` 또는 Tailscale IP | 자동 |
 | V2 | RCON(25575)은 `ports`에 없음 | `docker compose config`의 `ports`에 25575가 없는지 | 자동 |
 | V3 | 비밀값이 git에 없음 | `git ls-files .env` 출력이 비어 있음. `git diff --cached`에 토큰·비밀번호 없음. 새 키는 `.env.example`에 이름만 | 자동 |
-| V4 | 공개 파일에 로컬 정보가 없음 | `CLAUDE.local.md`의 "공개 파일 점검용 문자열" 각각으로 `git grep -nF '<값>'` 결과가 비어 있음. `git ls-files CLAUDE.local.md` 비어 있음 | 자동 |
+| V4 | 공개 파일에 로컬 정보가 없음 | `CLAUDE.local.md`의 "공개 파일 점검용 문자열" 각각으로 `git grep -nF '<값>'` 결과가 비어 있음. `git ls-files CLAUDE.local.md` 비어 있음. `git grep -nE '/home/[A-Za-z0-9_]'`로 사용자 홈 경로가 없음 (unit 파일은 템플릿만 커밋) | 자동 |
 | V5 | 월드 데이터가 git에 없음 | `git ls-files data/ backups/` 출력이 비어 있음 | 자동 |
 | V6 | compose 문법이 맞음 | `docker compose config -q` | 자동 |
 | V7 | 셸 스크립트 규칙 | `shellcheck scripts/*.sh` 통과, `set -euo pipefail` 있음 | 자동 |
