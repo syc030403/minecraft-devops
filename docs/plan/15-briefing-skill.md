@@ -38,13 +38,13 @@
   - `README.md`: 작업 흐름 표와 디렉토리 설명의 스킬 목록
 
 ## 수용 기준
-- [ ] 성공: `.claude/skills/briefing/SKILL.md`가 있고 Claude Code 스킬 목록에 `briefing`이 보인다
-- [ ] 성공: 이 노트북에서 실행하면 위 6개 Phase를 거쳐 보고 형식대로 출력한다
-- [ ] 성공: 보고에 다음 작업 추천과 시작 명령이 있다
-- [ ] 실패·예외: 실행 전후 `git status`가 같고 커밋·푸시·서버 변경이 없다
-- [ ] 실패·예외: 명령 하나가 실패해도(예: 컨테이너가 꺼짐) 멈추지 않고 "확인하지 못한 것"에 적고 끝까지 보고한다
-- [ ] 경계: 보고에 `.env` 값, 토큰이 없다
-- [ ] 경계: CLAUDE.md, collaboration.md, contributor-guide.md, README의 스킬 목록이 서로 맞다
+- [x] 성공: `.claude/skills/briefing/SKILL.md`가 있고 Claude Code 스킬 목록에 `briefing`이 보인다 (파일 생성 직후 세션 스킬 목록에 표시)
+- [x] 성공: 이 노트북에서 실행하면 위 6개 Phase를 거쳐 보고 형식대로 출력한다 (2026-11-20 실행)
+- [x] 성공: 보고에 다음 작업 추천과 시작 명령이 있다
+- [x] 실패·예외: 실행 전후 `git status`가 같고 커밋·푸시·서버 변경이 없다 (git status, HEAD, 컨테이너 StartedAt 전후 동일)
+- [x] 실패·예외: 명령 하나가 실패해도(예: 컨테이너가 꺼짐) 멈추지 않고 "확인하지 못한 것"에 적고 끝까지 보고한다 (HARD-GATE 5와 Phase 3·4 문구로 확인. 실제 실패 상황은 재현하지 않음)
+- [x] 경계: 보고에 `.env` 값, 토큰이 없다
+- [x] 경계: CLAUDE.md, collaboration.md, contributor-guide.md, README의 스킬 목록이 서로 맞다
 
 ## 지켜야 할 규칙
 - V3, V4 (스킬 파일과 문서에 로컬 값 없음)
@@ -76,3 +76,4 @@
 ## 진행 기록
 - 2026-11-20 빈 기획 파일 생성 (/issue)
 - 2026-11-20 기획 작성 (/plan)
+- 2026-11-20 구현 (/task): .claude/skills/briefing/SKILL.md 작성, CLAUDE.md·collaboration.md·contributor-guide.md·README 갱신, 실행 확인
