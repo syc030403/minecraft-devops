@@ -80,6 +80,7 @@ Claude Code 스킬로 이슈부터 PR까지 같은 순서로 진행하고, 매 �
 
 | 단계 | 남는 것 |
 | --- | --- |
+| `/briefing` | (새 세션 시작) 저장소·서버·작업 상태 점검, 다음 작업 추천. 아무것도 고치지 않음 |
 | `/issue` | GitHub 이슈, 작업 브랜치, 빈 기획 파일 |
 | `/plan` | 기획 파일(목적·수용 기준·영향 범위), 결정 기록 |
 | `/task` | 구현, 검증 결과, 문서 갱신 |
@@ -122,7 +123,7 @@ Claude Code 스킬로 이슈부터 PR까지 같은 순서로 진행하고, 매 �
 ├── scripts/            운영 스크립트 (DuckDNS 갱신, systemd unit 생성)
 ├── deploy/systemd/     systemd unit 템플릿
 ├── docs/               기준 문서, 기획 파일, 협업 문서, 접속 안내
-├── .claude/skills/     작업 흐름 스킬 (issue, plan, task, pr, review)
+├── .claude/skills/     작업 흐름 스킬 (briefing, issue, plan, task, pr, review)
 ├── .github/            이슈 템플릿
 └── data/               월드 데이터 (git 제외)
 ```
