@@ -38,7 +38,7 @@ git worktree add "<임시폴더>" review/pr-<번호>
 cd "<임시폴더>"
 docker compose config -q          # compose.yaml이 있으면 (.env가 필요하면 .env.example을 복사해 임시로)
 shellcheck scripts/*.sh           # 스크립트가 있으면
-pytest                            # 관리 API가 있으면
+docker build --target test api/   # 관리 API pytest
 cd - && git worktree remove --force "<임시폴더>" && git branch -D review/pr-<번호>
 ```
 `<임시폴더>`는 스크래치 디렉터리 아래에 만든다.

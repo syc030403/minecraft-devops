@@ -24,6 +24,9 @@ flowchart LR
     tailscale["Tailscale"] --> ssh["SSH"]
     ssh -->|"docker exec"| rcon["rcon-cli<br/>(컨테이너 내부 전용)"]
     rcon --> mc
+    tailscale -->|"Bearer 토큰"| api["api 컨테이너<br/>FastAPI (읽기 전용)"]
+    api -->|"RCON (내부 네트워크)"| mc
+    backups -.->|"읽기 전용 마운트"| api
   end
 
   admin["운영자"] -->|"Tailscale 전용"| tailscale
@@ -42,7 +45,7 @@ flowchart LR
 | 자동화 스크립트 | Bash, shellcheck, systemd 타이머 | 사용 중 |
 | DDNS | DuckDNS, systemd 타이머 | 사용 중 |
 | 백업 | tar + zstd, systemd 타이머 (매일, 최근 7개) | 사용 중 |
-| 관리 API | FastAPI | 예정 |
+| 관리 API | FastAPI (읽기 전용, Tailscale 전용) | 운영 중 |
 
 ## 보안 설계
 
@@ -61,6 +64,7 @@ flowchart LR
 ```bash
 cp .env.example .env
 # .env에서 MC_PORT(외부 공개 포트)와 MC_VERSION(예: 26.3)을 채운다
+# 관리 API용 RCON_PASSWORD, API_PORT, API_TAILSCALE_IP, API_TOKEN도 채운다 (.env.example 설명 참고)
 
 docker compose config -q      # 설정 검사
 docker compose up -d          # 기동
@@ -90,7 +94,7 @@ Claude Code 스킬로 이슈부터 PR까지 같은 순서로 진행하고, 매 �
 | `/pr` | 커밋, "확인한 것 / 확인하지 못한 것"을 나눈 PR |
 
 - 브랜치: `main`(안정) ← `develop`(통합) ← `feature/`·`fix/`·`docs/`·`chore/` 작업 브랜치
-- 검증: `docker compose config -q`, `shellcheck`, 포트·비밀값 점검을 통과해야 푸시합니다. PR에서는 GitHub Actions가 같은 검사를 한 번 더 돌립니다.
+- 검증: `docker compose config -q`, `shellcheck`, 관리 API 테스트(`docker build --target test api/`), 포트·비밀값 점검을 통과해야 푸시합니다. PR에서는 GitHub Actions가 같은 검사를 한 번 더 돌립니다.
 - 협업 규칙 전체: [docs/development/collaboration.md](docs/development/collaboration.md)
 
 ## 로드맵
@@ -101,7 +105,7 @@ Claude Code 스킬로 이슈부터 PR까지 같은 순서로 진행하고, 매 �
 | 2 | `compose.yaml` 작성·배포, 친구 접속 테스트 | 완료 ([#1](../../issues/1)) |
 | 3 | DuckDNS DDNS (유동 IP 대응) | 완료 ([#10](../../issues/10)) |
 | 4 | 월드 백업 자동화 | 완료 ([#17](../../issues/17)) |
-| 5 | FastAPI 관리 API | 예정 |
+| 5 | FastAPI 관리 API (읽기 전용) | 완료 ([#25](../../issues/25)) |
 | 6 | 모니터링, 모니터링 GUI | 예정 |
 | 7 | GitHub Actions (compose config, shellcheck) | 완료 ([#22](../../issues/22)) |
 
@@ -121,7 +125,8 @@ Claude Code 스킬로 이슈부터 PR까지 같은 순서로 진행하고, 매 �
 
 ```
 .
-├── compose.yaml        서버 정의
+├── compose.yaml        서버·관리 API 정의
+├── api/                관리 API (FastAPI, Dockerfile, 테스트)
 ├── .env.example        .env 키 목록 (.env는 커밋하지 않음)
 ├── scripts/            운영 스크립트 (DuckDNS 갱신, 월드 백업, systemd unit 생성)
 ├── deploy/systemd/     systemd unit 템플릿

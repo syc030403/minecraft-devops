@@ -54,7 +54,7 @@ Announce: `pr 스킬 실행 중 — 커밋하고 PR을 올립니다.`
 ```bash
 docker compose config -q
 shellcheck scripts/*.sh
-pytest                     # 관리 API가 생긴 뒤
+docker build --target test api/   # 관리 API pytest
 git ls-files data/ .env CLAUDE.local.md   # 출력이 비어 있어야 함
 ```
 - 하나라도 실패하거나 도구가 없으면 푸시하지 않고 멈춘다. 결과를 보고한다.

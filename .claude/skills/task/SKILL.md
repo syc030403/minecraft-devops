@@ -60,7 +60,7 @@ Announce: `task 스킬 실행 중 — #<N> 구현을 시작합니다.`
 ```bash
 docker compose config -q
 shellcheck scripts/*.sh
-pytest                     # 관리 API가 생긴 뒤
+docker build --target test api/   # 관리 API pytest
 ```
 규칙 점검 (`verification.md`):
 - V1·V2 포트: `docker compose config`의 `ports` 확인
