@@ -4,6 +4,13 @@
 
 | 날짜 | 결정 | 이유 | 관련 |
 | --- | --- | --- | --- |
+| 2026-11-23 | 이미지 2026.11.0-java25 고정과 함께 Java4Shell(CVE-2026-114938) 완화 `-XX:-UseBASE64Intrinsics`를 JVM_XX_OPTS로 직접 넣음. 자동 적용이 든 릴리스로 올릴 때 뺌 | 고른 릴리스에는 이미지 자동 완화(itzg PR #4400)가 없음 | [#19 기획](../plan/19-pin-server-image-tag.md) |
+| 2026-11-23 | 서버 이미지는 compose.yaml에 itzg 릴리스 태그(`<릴리스>-java25`)로 고정, 업데이트는 백업 후 태그 변경 PR | 재기동·pull 때 이미지가 예고 없이 바뀌지 않게, 올린 이력이 커밋으로 남음 | [#19 기획](../plan/19-pin-server-image-tag.md) |
+| 2026-11-23 | Paper 빌드(PAPER_BUILD)는 고정하지 않음 | 같은 마크 버전 안 빌드는 월드와 호환되는 버그·보안 수정 | [#19 기획](../plan/19-pin-server-image-tag.md) |
+| 2026-11-20 | 백업 대상은 data/에서 다시 받을 수 있는 것(libraries, versions, cache, logs, jar)을 뺀 전체 | 월드와 함께 화이트리스트·설정도 복구해야 함 | [#17 기획](../plan/17-world-backup-timer.md) |
+| 2026-11-20 | 외부(오프사이트) 백업은 이번에 하지 않고 로드맵 [아이디어]로 | 비용·계정 확인 필요 | [#17 기획](../plan/17-world-backup-timer.md) |
+| 2026-11-20 | 월드 백업은 매일 04:00 systemd 타이머 + 직접 실행, 최근 7개 보관, 저장소 backups/ 고정 | 하루치 손실 감수 가능, 경로 고정으로 삭제 범위 제한 | [#17 기획](../plan/17-world-backup-timer.md) |
+| 2026-11-20 | 새 세션 시작은 읽기 전용 /briefing 스킬로 상태 점검. 상세 문서는 각 스킬이 필요할 때 읽음 | 매번 같은 순서로 확인하고 시작 시 컨텍스트를 아낌. /status·/resume은 기본 명령과 겹침 | [#15 기획](../plan/15-briefing-skill.md) |
 | 2026-11-19 | 도메인(DuckDNS)은 공개 문서에 쓰지 않음. 실제 값은 .env와 로컬 파일 | 서버 주소+포트 공개 시 스캔·공격 대상이 되기 쉬움 | [#10 기획](../plan/10-duckdns-ddns.md) |
 | 2026-11-19 | systemd unit은 저장소에 템플릿(.in)만 두고 설치 시 생성 | 공개 저장소에 사용자 이름·홈 경로를 남기지 않음 | [#10 기획](../plan/10-duckdns-ddns.md) |
 | 2026-11-19 | 주기 작업은 셸 스크립트 + systemd 시스템 타이머. DDNS는 부팅 1분 뒤, 5분마다 | 로그인 없이 동작, journal 로그, 이후 백업도 같은 방식 | [#10 기획](../plan/10-duckdns-ddns.md) |

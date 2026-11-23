@@ -1,0 +1,16 @@
+# 템플릿: scripts/render-systemd.sh 가 @USER@, @REPO_DIR@ 를 채워 build/systemd/ 에 만든다.
+# backups/ 가 있어야 시작된다 (ReadWritePaths). 처음 한 번 scripts/world-backup.sh 를 직접 실행하면 생긴다.
+[Unit]
+Description=마크 월드 백업
+Wants=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+User=@USER@
+ExecStart=@REPO_DIR@/scripts/world-backup.sh
+# 최소 권한. 쓰기는 backups/ 만
+NoNewPrivileges=yes
+ProtectSystem=full
+ProtectHome=read-only
+ReadWritePaths=@REPO_DIR@/backups

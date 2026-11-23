@@ -7,6 +7,8 @@
 /issue → /plan → /task → /pr → (다른 사람 PR은) /review → 디렉터가 merge
 ```
 
+새 세션은 `/briefing`(읽기 전용 상태 점검)으로 시작한다.
+
 | 문서 | 내용 |
 | --- | --- |
 | `CLAUDE.local.md` | 호스트 IP, 인터페이스, 보안 설정, 실제 포트 (gitignore, 공개 금지) |
