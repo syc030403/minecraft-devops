@@ -4,6 +4,8 @@
 
 | 날짜 | 결정 | 이유 | 관련 |
 | --- | --- | --- | --- |
+| 2026-11-23 | GitHub Actions CI 도입: develop·main 대상 PR, develop·main push, 수동 실행. 검사는 compose config, shellcheck, 한 줄 규칙(V1·V2·V3·V5·V7, V4 홈 경로) | 로컬 검증을 한 번 더 확인. 로컬 문자열 점검은 공개할 수 없어 CI에서 제외 | [#22 기획](../plan/22-github-actions-ci.md) |
+| 2026-11-23 | CI는 보조. 푸시 전 로컬 검증 규칙 유지, 브랜치 보호로 merge를 막지 않음 | V4 로컬 문자열은 로컬에서만 가능, 1인 운영이라 디렉터가 PR에서 판단 | [#22 기획](../plan/22-github-actions-ci.md) |
 | 2026-11-23 | 이미지 2026.11.0-java25 고정과 함께 Java4Shell(CVE-2026-114938) 완화 `-XX:-UseBASE64Intrinsics`를 JVM_XX_OPTS로 직접 넣음. 자동 적용이 든 릴리스로 올릴 때 뺌 | 고른 릴리스에는 이미지 자동 완화(itzg PR #4400)가 없음 | [#19 기획](../plan/19-pin-server-image-tag.md) |
 | 2026-11-23 | 서버 이미지는 compose.yaml에 itzg 릴리스 태그(`<릴리스>-java25`)로 고정, 업데이트는 백업 후 태그 변경 PR | 재기동·pull 때 이미지가 예고 없이 바뀌지 않게, 올린 이력이 커밋으로 남음 | [#19 기획](../plan/19-pin-server-image-tag.md) |
 | 2026-11-23 | Paper 빌드(PAPER_BUILD)는 고정하지 않음 | 같은 마크 버전 안 빌드는 월드와 호환되는 버그·보안 수정 | [#19 기획](../plan/19-pin-server-image-tag.md) |
