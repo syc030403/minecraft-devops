@@ -4,7 +4,8 @@
 
 services:
   mc:
-    image: itzg/minecraft-server:latest
+    # 이미지는 릴리스 태그로 고정. 올리는 절차는 docs/design/systems/01-server.md "이미지 업데이트"
+    image: itzg/minecraft-server:2026.11.0-java25
     container_name: mc
     restart: unless-stopped
     # 종료 시 월드 저장 시간 확보
@@ -18,6 +19,9 @@ services:
       ONLINE_MODE: "TRUE"
       ENABLE_WHITELIST: "TRUE"
       ENFORCE_WHITELIST: "TRUE"
+      # Java4Shell(CVE-2026-114938) 완화. 2026.11.0 이미지에는 자동 적용이 없어서 직접 넣는다.
+      # 자동 적용(FIX_JAVA4SHELL_EXPLOIT)이 들어간 릴리스로 올릴 때 이 줄을 뺀다.
+      JVM_XX_OPTS: "-XX:-UseBASE64Intrinsics"
     ports:
       # 외부 공개는 이 포트 하나만. RCON(25575)은 넣지 않는다.
       - "${MC_PORT:?.env에 MC_PORT를 설정하세요}:25565"

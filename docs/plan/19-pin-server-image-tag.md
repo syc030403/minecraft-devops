@@ -12,7 +12,9 @@
 ## 규칙 / 변경 내용
 - [확정] `compose.yaml`의 `image`를 `itzg/minecraft-server:<릴리스>-java25` 형태의 릴리스 태그로 고정한다. 값은 `.env`가 아니라 `compose.yaml`에 직접 둔다 (호스트별 값이 아니고, 올린 이력이 커밋으로 남음)
 - [확정] 고를 태그: 지금 실행 중인 이미지와 같은 빌드의 릴리스 태그. 실행 중 이미지는 2026-11-19 빌드, `java25` 변형, 소스 커밋 `2b70dfc`. `/task`에서 Docker Hub 태그 목록과 digest를 대조해 정한다. 같은 digest의 태그가 없으면 가장 가까운 릴리스를 고르고 진행 기록에 이유를 적는다
-- [추론] itzg 릴리스 태그 형식은 `YYYY.M.P`와 `YYYY.M.P-java25`. `/task`에서 확인
+- [확정] itzg 릴리스 태그 형식은 `YYYY.M.P`와 `YYYY.M.P-java25` (Docker Hub 태그 목록으로 확인)
+- [확정] 고른 태그: `2026.11.0-java25` (digest `8d5080d8…`). 실행 중이던 `latest` 이미지(digest `eb30f3c5…`, 커밋 `2b70dfc`)와 같은 digest의 릴리스 태그는 없었다. 이 커밋은 `2026.11.0`보다 15커밋 앞서 있었다 (GitHub compare)
+- [임시] 그 15커밋 안에 Java4Shell(CVE-2026-114938) 완화(itzg PR #4400, `-XX:-UseBASE64Intrinsics` 자동 추가)가 있어서, `compose.yaml`에 `JVM_XX_OPTS: "-XX:-UseBASE64Intrinsics"`를 직접 넣는다. 자동 적용이 들어간 릴리스로 올릴 때 뺀다 (/task 중 디렉터 결정)
 - [확정] Paper 빌드(`PAPER_BUILD`)는 고정하지 않는다. 같은 마크 버전(`MC_VERSION`) 안의 빌드 갱신은 허용
 - [확정] 업데이트 절차 (`01-server.md`에 적음):
   1. 백업: `sudo systemctl start world-backup.service`로 수동 백업하고 성공 확인
@@ -23,13 +25,14 @@
 - [확정] 복구 시험 명령(`03-backup.md`)의 `:latest`를 `compose.yaml`과 같은 태그를 쓰도록 바꾼다
 
 ## 수용 기준
-- [ ] 성공: `docker compose config`의 `mc` 이미지가 `itzg/minecraft-server:<릴리스>-java25` 형태이고 `latest`가 아니다
-- [ ] 성공: 고정 후 `docker compose up -d` → `docker logs mc`에 `Done`. 마크 버전은 26.3 그대로
-- [ ] 성공: `01-server.md`의 [미정] "이미지 태그 고정 여부"와 [임시] "이미지 태그 `latest`"가 [확정] 릴리스 태그 고정으로 바뀌고 업데이트 절차가 있다
-- [ ] 성공: `03-backup.md` 복구 시험 명령이 `latest`를 쓰지 않는다
-- [ ] 실패·예외: 적은 태그가 Docker Hub에 없으면 `docker compose pull`이 실패하고, 실행 중인 컨테이너는 그대로 남는다 (`up -d` 전에 `pull`로 먼저 확인)
-- [ ] 경계: 고정한 뒤 `docker compose pull`을 다시 해도 이미지 ID가 바뀌지 않고, `docker compose up -d`를 두 번 해도 두 번째에는 재생성이 없다
-- [ ] 경계: `git grep -n 'minecraft-server:latest' -- ':!docs/plan' ':!docs/design/decisions.md'` 결과가 비어 있다 (지난 기획·결정 기록은 이력이므로 그대로 둠)
+- [x] 성공: `docker compose config`의 `mc` 이미지가 `itzg/minecraft-server:<릴리스>-java25` 형태이고 `latest`가 아니다
+- [x] 성공: 고정 후 `docker compose up -d` → `docker logs mc`에 `Done`. 마크 버전은 26.3 그대로
+- [x] 성공: 새 컨테이너의 java 프로세스에 `-XX:-UseBASE64Intrinsics`가 붙어 있다
+- [x] 성공: `01-server.md`의 [미정] "이미지 태그 고정 여부"와 [임시] "이미지 태그 `latest`"가 [확정] 릴리스 태그 고정으로 바뀌고 업데이트 절차가 있다
+- [x] 성공: `03-backup.md` 복구 시험 명령이 `latest`를 쓰지 않는다
+- [x] 실패·예외: 적은 태그가 Docker Hub에 없으면 `docker compose pull`이 실패하고, 실행 중인 컨테이너는 그대로 남는다 (`up -d` 전에 `pull`로 먼저 확인)
+- [x] 경계: 고정한 뒤 `docker compose pull`을 다시 해도 이미지 ID가 바뀌지 않고, `docker compose up -d`를 두 번 해도 두 번째에는 재생성이 없다
+- [x] 경계: `git grep -n 'minecraft-server:latest' -- ':!docs/plan' ':!docs/design/decisions.md'` 결과가 비어 있다 (지난 기획·결정 기록은 이력이므로 그대로 둠)
 
 ## 지켜야 할 규칙
 - verification.md: V1, V2, V4, V6, V13, V14
@@ -63,7 +66,9 @@
 | 서버 이미지는 `compose.yaml`에 itzg 릴리스 태그(`<릴리스>-java25`)로 고정 | 재기동·pull 때 이미지가 예고 없이 바뀌지 않게. 읽기 쉽고 한 줄로 올릴 수 있음. 올린 이력이 커밋으로 남음 | 2026-11-23 |
 | Paper 빌드는 고정하지 않음 | 같은 마크 버전 안 빌드는 월드와 호환되는 버그·보안 수정 | 2026-11-23 |
 | 이미지 업데이트는 백업 후 태그 변경 PR로 | 문제 시 이전 태그로 되돌리기 쉬움 | 2026-11-23 |
+| `2026.11.0-java25`로 고정하고 Java4Shell 완화 플래그를 `JVM_XX_OPTS`로 직접 넣음 (/task 중) | 실행 중 이미지와 같은 릴리스 태그가 없고, 가장 가까운 릴리스에는 완화가 빠져 있음. 다음 릴리스를 기다리지 않고 지금 고정 | 2026-11-23 |
 
 ## 진행 기록
 - 2026-11-20 빈 기획 파일 생성 (/issue)
 - 2026-11-23 기획 작성 (/plan)
+- 2026-11-23 구현 (/task): `2026.11.0-java25` + 완화 플래그. 접속자 0명 확인 후 재생성, Paper 26.3-258 `Done (7.058s)`
