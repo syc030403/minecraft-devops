@@ -19,6 +19,11 @@ jobs:
       # compose.yaml 필수 변수용 더미 값. 실제 포트를 쓰지 않는다.
       MC_PORT: "25565"
       MC_VERSION: LATEST
+      RCON_PASSWORD: dummy
+      API_TOKEN: dummy
+      API_PORT: "8000"
+      # 실제 IP가 아닌 Tailscale 대역(100.64.0.0/10)의 첫 주소
+      API_TAILSCALE_IP: 100.64.0.1
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
