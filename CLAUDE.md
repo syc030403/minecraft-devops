@@ -57,7 +57,8 @@
 - 직접 확인: 기동 로그의 `Done`, `ss -tlnp`로 열린 포트, 친구 접속, 백업 복구.
 - 규칙별 확인 방법은 `docs/design/verification.md`. 직접 확인을 못 했으면 못 했다고 적는다.
 - 도구가 없어서 못 돌렸으면 통과가 아니다. 멈추고 설치 명령을 제시한다.
-- CI는 없다. 로컬 검증이 유일한 검사다. 통과해야만 푸시한다.
+- 로컬 검증이 기준이다. 통과해야만 푸시한다.
+- CI(GitHub Actions `.github/workflows/check.yml`)는 보조다. develop·main 대상 PR과 push에서 compose config, shellcheck, 한 줄 규칙(V1·V2·V3·V5·V7, V4 홈 경로)을 검사한다. `CLAUDE.local.md` 문자열 점검(V4)은 로컬에서만 한다. merge를 막지 않으며 결과는 `gh pr checks <번호>`로 본다.
 
 ## 문서
 - 기능을 바꾸면 같은 작업에서 `docs/design/systems/` 문서를 고친다. 친구에게 영향이 있으면 `docs/player-guide.md`도.

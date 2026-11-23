@@ -90,7 +90,7 @@ Claude Code 스킬로 이슈부터 PR까지 같은 순서로 진행하고, 매 �
 | `/pr` | 커밋, "확인한 것 / 확인하지 못한 것"을 나눈 PR |
 
 - 브랜치: `main`(안정) ← `develop`(통합) ← `feature/`·`fix/`·`docs/`·`chore/` 작업 브랜치
-- 검증: `docker compose config -q`, `shellcheck`, 포트·비밀값 점검을 통과해야 푸시합니다.
+- 검증: `docker compose config -q`, `shellcheck`, 포트·비밀값 점검을 통과해야 푸시합니다. PR에서는 GitHub Actions가 같은 검사를 한 번 더 돌립니다.
 - 협업 규칙 전체: [docs/development/collaboration.md](docs/development/collaboration.md)
 
 ## 로드맵
@@ -103,7 +103,7 @@ Claude Code 스킬로 이슈부터 PR까지 같은 순서로 진행하고, 매 �
 | 4 | 월드 백업 자동화 | 완료 ([#17](../../issues/17)) |
 | 5 | FastAPI 관리 API | 예정 |
 | 6 | 모니터링, 모니터링 GUI | 예정 |
-| 7 | GitHub Actions (compose config, shellcheck) | 예정 |
+| 7 | GitHub Actions (compose config, shellcheck) | 완료 ([#22](../../issues/22)) |
 
 ## 문서
 

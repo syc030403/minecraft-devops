@@ -67,6 +67,7 @@ git ls-files data/ .env CLAUDE.local.md   # 출력이 비어 있어야 함
 
 ## Phase 6: 보고
 - PR URL, 커밋 목록, 검증 결과, 확인하지 못한 것
+- CI 결과: `gh pr checks <번호>` (보조. 아직 돌고 있으면 진행 중이라고 적고, 실패하면 실패한 step을 적는다)
 - "merge는 디렉터가 **Create a merge commit**으로 해주세요."
 
 ## PR 본문
