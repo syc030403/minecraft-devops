@@ -24,7 +24,7 @@ develop·main으로 가는 PR과 merge 결과를 GitHub Actions에서 자동으�
 - [확정] `compose.yaml`의 필수 변수(`MC_PORT`, `MC_VERSION`)는 workflow `env`에 더미 값을 넣는다: `MC_PORT=25565`, `MC_VERSION=LATEST`. 실제 포트를 쓰지 않는다
 - [확정] CI는 보조: 로컬 검증 규칙(통과해야 푸시)은 유지하고, 브랜치 보호로 merge를 막지 않는다. PR에서 결과를 보고 디렉터가 판단
 - [임시] runner는 `ubuntu-24.04`로 고정 (`ubuntu-latest`는 움직이는 태그). [추론] shellcheck, docker compose, jq가 기본 설치돼 있음. `/task`에서 확인하고 없으면 설치 step 추가
-- [임시] 외부 action은 `actions/checkout`만 쓰고 커밋 SHA로 고정(옆에 버전 주석). `permissions: contents: read`, secrets는 쓰지 않음
+- [임시] 외부 action은 `actions/checkout`만 쓰고 커밋 SHA로 고정(옆에 버전 주석). 현재 `v7.0.1` (`3d3c42e5…`). `permissions: contents: read`, secrets는 쓰지 않음
 - [임시] 검사 로직은 별도 스크립트 없이 workflow step에 직접 쓴다 (작게 유지)
 - [확정] "CI가 없다"고 적힌 문서를 고친다: `CLAUDE.md`, `docs/development/collaboration.md`, `README.md`. 로드맵 8번은 [확정]으로
 - [임시] `/pr` 보고와 `/review` 검증에 `gh pr checks <번호>` 결과 확인을 한 줄씩 추가
@@ -33,15 +33,15 @@ develop·main으로 가는 PR과 merge 결과를 GitHub Actions에서 자동으�
 - [ ] 성공: 이 브랜치의 develop 대상 PR에서 workflow가 돌고 모든 step이 통과한다 (`gh pr checks`)
 - [ ] 성공: develop에 merge되면 push 트리거로 다시 돌고 통과한다 (merge 후 확인)
 - [ ] 성공: `gh workflow run check.yml --ref <브랜치>`로 수동 실행된다
-- [ ] 실패·예외: 각 검사 명령을 로컬에서 일부러 틀린 입력으로 돌리면 0이 아닌 코드로 끝난다. 틀린 입력은 임시 사본으로 만들고 커밋하지 않는다
+- [x] 실패·예외: 각 검사 명령을 로컬에서 일부러 틀린 입력으로 돌리면 0이 아닌 코드로 끝난다. 틀린 입력은 임시 사본으로 만들고 커밋하지 않는다
   - 25575를 publish한 compose 사본
   - 공개 포트가 2개인 compose 사본
   - `set -euo pipefail`이 없는 스크립트 사본
   - shellcheck 경고가 있는 스크립트 사본
-- [ ] 실패·예외: 필수 변수 더미 값이 없으면 compose step이 실패한다 (로컬에서 `env -u`로 확인)
-- [ ] 경계: workflow에 `CLAUDE.local.md`의 값, 비밀값, secrets 참조가 없다 (V3·V4 로컬 점검)
+- [x] 실패·예외: 필수 변수 더미 값이 없으면 compose step이 실패한다 (로컬에서 `env -u`로 확인)
+- [x] 경계: workflow에 `CLAUDE.local.md`의 값, 비밀값, secrets 참조가 없다 (V3·V4 로컬 점검)
 - [ ] 경계: 작업 브랜치 push와 PR이 함께 있을 때 workflow가 PR 쪽에서 한 번만 돈다
-- [ ] 경계: "CI가 없다"는 문구가 `CLAUDE.md`·`collaboration.md`·`README.md`에 남아 있지 않다
+- [x] 경계: "CI가 없다"는 문구가 `CLAUDE.md`·`collaboration.md`·`README.md`에 남아 있지 않다
 
 ## 지켜야 할 규칙
 - verification.md: V1, V2, V3, V4, V5, V6, V7 (CI가 검사하는 항목이자, 이 변경 자체가 지켜야 하는 항목)
@@ -80,3 +80,4 @@ develop·main으로 가는 PR과 merge 결과를 GitHub Actions에서 자동으�
 ## 진행 기록
 - 2026-11-23 빈 기획 파일 생성 (/issue)
 - 2026-11-23 기획 작성 (/plan)
+- 2026-11-23 구현 (/task): `check.yml`(step 9개: 도구 버전 + 검사 8개), 문서·스킬 갱신. `.env` 없는 임시 사본에서 정상 경로는 전부 통과했다. 음성 테스트도 전부 실패로 잡혔다: 25575, 공개 포트 2개, pipefail 없음, shellcheck 경고, 더미 변수 없음, .env·data 추적, 홈 경로. `127.0.0.1` 바인딩 추가는 통과. CI 실제 실행은 PR 후 확인

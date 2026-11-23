@@ -65,6 +65,6 @@
 | 11 | Ubuntu Server 이전 (백업·호스트 설정 자동화 이후) | server | [아이디어] |
 | 12 | 호스트 설정 자동화 (Docker·Tailscale·SSH·ufw·절전 설정을 스크립트 또는 Ansible로) | server, network | [아이디어] |
 | 13 | 외부(오프사이트) 백업 (비용·계정 검토 후) | backup | [아이디어] |
-| 8 | GitHub Actions (compose config, shellcheck) | — | [아이디어] |
+| 8 | GitHub Actions (compose config, shellcheck, 한 줄 규칙) | — | [확정] |
 
 로드맵 항목은 `/issue`로 이슈를 만들어 진행한다.

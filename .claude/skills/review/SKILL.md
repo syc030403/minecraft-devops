@@ -43,6 +43,8 @@ cd - && git worktree remove --force "<임시폴더>" && git branch -D review/pr-
 ```
 `<임시폴더>`는 스크래치 디렉터리 아래에 만든다.
 
+CI 결과도 본다: `gh pr checks <번호>`. CI는 보조라서 위 로컬 검증을 대신하지 않는다.
+
 ## Phase 4: 코드 읽기 (호출하는 곳까지 따라가기)
 ### A. 정확성 (인프라 체크리스트)
 - **포트 노출**: 마크 서버 포트 외에 host IP 없이 publish된 포트가 있는지. Docker publish는 ufw를 우회한다. RCON(25575)이 `ports`에 있는지.
