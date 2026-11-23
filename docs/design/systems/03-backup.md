@@ -39,10 +39,10 @@
 4. 기동: `docker compose up -d` → `docker logs mc --tail 50`에 `Done`. jar·라이브러리는 기동할 때 다시 받는다
 5. 접속해서 월드·화이트리스트 확인
 
-복구 시험(운영과 분리): 백업을 임시 디렉토리에 풀고 포트 없이 임시 컨테이너로 기동해 `Done` 확인.
+복구 시험(운영과 분리): 백업을 임시 디렉토리에 풀고 포트 없이 임시 컨테이너로 기동해 `Done` 확인. 이미지는 `compose.yaml`의 `image`와 같은 태그를 쓴다.
 ```
 docker run -d --rm --name mc-restore-test -v <임시디렉토리>:/data \
-  -e EULA=TRUE -e TYPE=PAPER -e VERSION=<MC_VERSION> -e MEMORY=2G itzg/minecraft-server:latest
+  -e EULA=TRUE -e TYPE=PAPER -e VERSION=<MC_VERSION> -e MEMORY=2G itzg/minecraft-server:<compose.yaml의 태그>
 ```
 
 ## 관련 파일
