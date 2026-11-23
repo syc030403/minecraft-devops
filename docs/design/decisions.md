@@ -4,6 +4,8 @@
 
 | 날짜 | 결정 | 이유 | 관련 |
 | --- | --- | --- | --- |
+| 2026-11-23 | 서버 이미지는 compose.yaml에 itzg 릴리스 태그(`<릴리스>-java25`)로 고정, 업데이트는 백업 후 태그 변경 PR | 재기동·pull 때 이미지가 예고 없이 바뀌지 않게, 올린 이력이 커밋으로 남음 | [#19 기획](../plan/19-pin-server-image-tag.md) |
+| 2026-11-23 | Paper 빌드(PAPER_BUILD)는 고정하지 않음 | 같은 마크 버전 안 빌드는 월드와 호환되는 버그·보안 수정 | [#19 기획](../plan/19-pin-server-image-tag.md) |
 | 2026-11-20 | 백업 대상은 data/에서 다시 받을 수 있는 것(libraries, versions, cache, logs, jar)을 뺀 전체 | 월드와 함께 화이트리스트·설정도 복구해야 함 | [#17 기획](../plan/17-world-backup-timer.md) |
 | 2026-11-20 | 외부(오프사이트) 백업은 이번에 하지 않고 로드맵 [아이디어]로 | 비용·계정 확인 필요 | [#17 기획](../plan/17-world-backup-timer.md) |
 | 2026-11-20 | 월드 백업은 매일 04:00 systemd 타이머 + 직접 실행, 최근 7개 보관, 저장소 backups/ 고정 | 하루치 손실 감수 가능, 경로 고정으로 삭제 범위 제한 | [#17 기획](../plan/17-world-backup-timer.md) |
