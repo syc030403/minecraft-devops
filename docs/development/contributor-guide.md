@@ -8,7 +8,7 @@ Claude Code 스킬로 이슈 → 기획 → 구현 → PR을 진행하는 방법
 3. 검증 도구
    - Docker + Compose
    - shellcheck: `sudo apt install shellcheck`
-   - Python 3 (관리 API가 생긴 뒤 `pytest`)
+   - 관리 API 테스트는 Docker로 돌린다: `docker build --target test api/` (호스트에 Python 패키지 불필요)
 4. 로컬 파일 (커밋 금지)
    - `.env` — `.env.example`을 복사해 값 채우기
    - `CLAUDE.local.md` — 호스트 정보. 서버 운영자만 가짐

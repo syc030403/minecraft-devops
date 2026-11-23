@@ -83,7 +83,7 @@
 | --- | --- |
 | compose | `docker compose config -q` |
 | 셸 스크립트 | `shellcheck scripts/*.sh` |
-| 관리 API (생긴 뒤) | `pytest` |
+| 관리 API | `docker build --target test api/` (컨테이너 안에서 pytest) |
 | 규칙 | `docs/design/verification.md`의 V1~V14 |
 
 - 해당 파일이 있으면 모두 통과해야 한다.

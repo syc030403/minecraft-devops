@@ -10,6 +10,8 @@
 - [확정] 마크 서버 포트는 `.env`의 `MC_PORT`로 지정한다 (`compose.yaml`에 실제 값을 쓰지 않음).
 - [확정] 공인 IP 직결이라 공유기 포트포워딩은 없다. Docker publish가 ufw를 우회하므로 ufw 규칙 추가도 필요 없다.
 - [임시] publish는 IPv4(`0.0.0.0`)와 IPv6(`[::]`) 모두에 열린다.
+- [확정] 관리 API(`api`)는 `127.0.0.1:${API_PORT}`와 `${API_TAILSCALE_IP}:${API_PORT}`에만 바인딩한다. 값은 `.env` (#25)
+- [임시] 부팅 때 Tailscale보다 Docker가 먼저 뜨면 Tailscale IP 바인딩이 실패할 수 있다. 재부팅 확인 전 (#25)
 
 ## 원격 접속
 - [확정] 원격 관리는 Tailscale로만. SSH는 키 인증만.
@@ -31,7 +33,7 @@
   - 토큰 재발급 후: `.env`의 `DUCKDNS_TOKEN` 교체
 
 ## 관련 파일
-- `compose.yaml`의 `ports`
+- `compose.yaml`의 `ports` (mc, api)
 - `scripts/duckdns-update.sh`, `scripts/render-systemd.sh`
 - `deploy/systemd/duckdns-update.service.in`, `duckdns-update.timer.in`
 

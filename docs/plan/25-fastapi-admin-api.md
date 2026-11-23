@@ -36,21 +36,21 @@
 - `.env.example`: `API_PORT=`, `API_TAILSCALE_IP=`, `API_TOKEN=`, `RCON_PASSWORD=` (이름만)
 
 ## 수용 기준
-- [ ] 성공: `docker build --target test api/` 통과 (RCON 파싱, 인증, 백업 조회 단위 테스트)
-- [ ] 성공: `docker compose up -d` 후 `api`가 healthy, `127.0.0.1`과 Tailscale IP에서 `/health` 200
-- [ ] 성공: 토큰을 넣은 `/status`가 `online: true`, 접속자 수가 `docker exec mc rcon-cli list`와 같다
-- [ ] 성공: 토큰을 넣은 `/backups/latest`가 `ls -t backups/world-*.tar.zst | head -1`과 같은 파일
-- [ ] 실패·예외: 토큰이 없거나 틀리면 `/status`, `/backups/latest`가 401
-- [ ] 실패·예외: mc가 꺼져 있으면 `/status`가 200 + `online: false`, API는 죽지 않는다 (테스트는 가짜 RCON)
-- [ ] 실패·예외: `API_TOKEN`이나 `RCON_PASSWORD`가 비어 있으면 `docker compose config` 실패
-- [ ] 경계: 백업 0개이면 `/backups/latest`가 `latest: null`, `count: 0`
-- [ ] 경계: `backups/`의 다른 이름 파일(`.partial`, `.lock`)은 무시
-- [ ] 경계: 접속자 0명·여러 명 모두 `list` 파싱이 맞다 (단위 테스트)
-- [ ] 보안: `docker compose config`의 `ports`에서 host_ip 없는 항목은 마크 서버 포트 하나, 25575 없음 (V1, V2)
-- [ ] 보안: `ss -tlnp`에서 API 포트가 `127.0.0.1`과 Tailscale IP에만 열림
-- [ ] 보안: api 컨테이너에 `docker.sock` 마운트 없음, 비root 실행 (`docker inspect`, `docker exec api id`)
-- [ ] 운영: mc를 다시 만든 뒤 기동 로그 `Done`, `world-backup.sh`가 계속 성공 (rcon-cli가 새 비밀번호 사용)
-- [ ] 문서: `04-api.md` [미정] 3개 정리, 관련 파일·확인 방법 갱신
+- [x] 성공: `docker build --target test api/` 통과 (RCON 파싱, 인증, 백업 조회 단위 테스트)
+- [x] 성공: `docker compose up -d` 후 `api`가 healthy, `127.0.0.1`과 Tailscale IP에서 `/health` 200
+- [x] 성공: 토큰을 넣은 `/status`가 `online: true`, 접속자 수가 `docker exec mc rcon-cli list`와 같다
+- [x] 성공: 토큰을 넣은 `/backups/latest`가 `ls -t backups/world-*.tar.zst | head -1`과 같은 파일
+- [x] 실패·예외: 토큰이 없거나 틀리면 `/status`, `/backups/latest`가 401
+- [x] 실패·예외: mc가 꺼져 있으면 `/status`가 200 + `online: false`, API는 죽지 않는다 (테스트는 가짜 RCON) (단위 테스트 + 일회용 api 컨테이너로 연결 실패·비밀번호 틀림 확인. 운영 mc를 실제로 멈추는 확인은 안 함)
+- [x] 실패·예외: `API_TOKEN`이나 `RCON_PASSWORD`가 비어 있으면 `docker compose config` 실패
+- [x] 경계: 백업 0개이면 `/backups/latest`가 `latest: null`, `count: 0`
+- [x] 경계: `backups/`의 다른 이름 파일(`.partial`, `.lock`)은 무시
+- [x] 경계: 접속자 0명·여러 명 모두 `list` 파싱이 맞다 (단위 테스트)
+- [x] 보안: `docker compose config`의 `ports`에서 host_ip 없는 항목은 마크 서버 포트 하나, 25575 없음 (V1, V2)
+- [x] 보안: `ss -tlnp`에서 API 포트가 `127.0.0.1`과 Tailscale IP에만 열림
+- [x] 보안: api 컨테이너에 `docker.sock` 마운트 없음, 비root 실행 (`docker inspect`, `docker exec api id`)
+- [x] 운영: mc를 다시 만든 뒤 기동 로그 `Done`, `world-backup.sh`가 계속 성공 (rcon-cli가 새 비밀번호 사용)
+- [x] 문서: `04-api.md` [미정] 3개 정리, 관련 파일·확인 방법 갱신
 
 ## 지켜야 할 규칙
 - verification.md: V1 (새 포트는 127.0.0.1·Tailscale IP만), V2 (RCON은 ports에 없음), V3 (`API_TOKEN`·`RCON_PASSWORD`는 `.env`에만), V4 (Tailscale IP·실제 포트를 공개 파일에 쓰지 않음), V6 (compose 문법), V13 (mc 다시 만든 뒤 `Done`)
@@ -62,6 +62,7 @@
 ## 영향 범위 (예상)
 - 새 파일: `api/Dockerfile`, `api/requirements.txt`, `api/requirements-dev.txt`, `api/app/main.py`, `api/app/rcon.py`, `api/tests/` (2~3개). 테스트 포함 약 300~400줄 [추론]. 나누기 기준에 걸칠 수 있으나 읽기 전용으로 범위를 이미 줄였으므로 나누지 않음
 - 수정: `compose.yaml` (`api` 서비스, mc에 `RCON_PASSWORD`), `.env.example`
+- 수정 (구현 중 추가, 디렉터 승인): `.github/workflows/check.yml` 더미 env에 새 필수 변수 4개. 없으면 CI의 compose config가 실패
 - 로컬 (커밋 안 함): `.env` 키 4개, mc 컨테이너 다시 만들기
 - 문서:
   - `systems/04-api.md`: [미정] 정리, 엔드포인트, 관련 파일
@@ -108,7 +109,14 @@
 | RCON 클라이언트 직접 구현 | 프로토콜이 작고 학습 목적, 라이브러리 최소화 | 해당 없음 |
 | pytest는 Dockerfile test 단계에서 실행 | 호스트 패키지 설치 없음(sudo 불필요), 운영 이미지에 테스트 도구 없음 | 해당 없음 |
 | RCON 실패 시 `/status`는 200 + `online: false` | 서버 꺼짐은 오류가 아니라 상태. 모니터링이 다루기 쉬움 | 해당 없음 |
+| API 호스트 포트 8000 (`.env`) | 컨테이너 포트와 같아 헷갈리지 않음 (디렉터 선택) | 해당 없음 |
+| api 컨테이너 강화: 읽기 전용 루트, `cap_drop: ALL`, `no-new-privileges`, `/tmp` tmpfs | 쓸 곳이 없는 읽기 전용 서비스라 비용 없이 공격면을 줄임 | 해당 없음 |
+| 자동 문서 `/docs`·`/openapi.json` 끔 | 인증 없이 API 구조가 보이지 않게 | 해당 없음 |
+| 백업 디렉토리가 없으면 503 | 마운트 실수를 "백업 0개"로 숨기지 않음 | 해당 없음 |
+| 최신 백업은 이름 순서, 시각은 UTC | `world-backup.sh` 정리 기준(이름 정렬)과 같음. slim 이미지 시간대 의존 없음 | 해당 없음 |
 
 ## 진행 기록
 - 2026-11-23 빈 기획 파일 생성 (/issue)
 - 2026-11-23 기획 작성 (/plan)
+- 2026-11-23 구현 (/task): `api/`(rcon·main·테스트 23개·Dockerfile 3단계), compose `api` 서비스와 mc `RCON_PASSWORD`, 문서. 테스트 먼저 실패 확인 후 통과. mc 다시 만들기(접속자 0, `Done (7.125s)`), api healthy, 127.0.0.1·Tailscale IP에서 `/health`·`/status`·`/backups/latest` 정상, 토큰 없음·틀림 401, `world-backup.sh` 새 비밀번호로 성공. 재부팅·운영 mc 정지 확인은 안 함
+- 2026-11-23 디렉터 승인: CI 더미 env 추가 (`RCON_PASSWORD`, `API_TOKEN`, `API_PORT`, `API_TAILSCALE_IP`=100.64.0.1). `.env` 없는 사본에서 compose config 통과, V1 공개 포트 1개, V2 25575 없음

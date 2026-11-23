@@ -11,7 +11,7 @@
                               ▲
                      DuckDNS (유동 IP 갱신)
 
-운영자 ──Tailscale──▶ SSH / 관리 API(예정) / RCON(컨테이너 내부만)
+운영자 ──Tailscale──▶ SSH / 관리 API(api 컨테이너) / RCON(컨테이너 내부만)
 ```
 
 - 호스트: Ubuntu 노트북 1대. 상세(IP, 인터페이스, 보안 설정)는 `CLAUDE.local.md`.
@@ -27,7 +27,8 @@
 | --- | --- | --- |
 | `README.md` | 저장소 소개 (요약 + 문서 링크) | O |
 | `LICENSE` | MIT | O |
-| `compose.yaml` | 서버 정의 | O |
+| `compose.yaml` | 서버·관리 API 정의 | O |
+| `api/` | 관리 API (FastAPI, Dockerfile, 테스트) | O |
 | `scripts/` | 백업, DDNS 등 스크립트 | O |
 | `deploy/systemd/` | systemd unit 템플릿 (`.in`) | O |
 | `build/` | 템플릿에서 생성한 unit 파일 | X |
@@ -57,7 +58,7 @@
 | 2 | `compose.yaml` 작성·배포, 친구 접속 테스트 | server, network | [확정] |
 | 3 | DuckDNS DDNS (유동 IP 대응) | network | [확정] |
 | 4 | 월드 백업 자동화 | backup | [확정] |
-| 5 | FastAPI 관리 API | api | [아이디어] |
+| 5 | FastAPI 관리 API (읽기 전용 #25, 쓰기는 별도) | api | [확정] |
 | 6 | 모니터링 | monitoring | [아이디어] |
 | 7 | 모니터링 GUI (에반게리온 풍) | monitoring, api | [아이디어] |
 | 9 | 공유기 도입 검토 (NAT로 노출 범위 제한, 내장 DDNS) | network | [아이디어] |

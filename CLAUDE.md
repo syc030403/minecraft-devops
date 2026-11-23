@@ -53,7 +53,7 @@
 - 자동 (해당 파일이 있으면 모두 통과해야 함):
   - `docker compose config -q`
   - `shellcheck scripts/*.sh`
-  - `pytest` (관리 API가 생긴 뒤)
+  - `docker build --target test api/` (관리 API pytest, 컨테이너 안에서 실행)
 - 직접 확인: 기동 로그의 `Done`, `ss -tlnp`로 열린 포트, 친구 접속, 백업 복구.
 - 규칙별 확인 방법은 `docs/design/verification.md`. 직접 확인을 못 했으면 못 했다고 적는다.
 - 도구가 없어서 못 돌렸으면 통과가 아니다. 멈추고 설치 명령을 제시한다.
